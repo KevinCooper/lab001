@@ -14,9 +14,47 @@ entity h_sync_gen is
 end h_sync_gen;
 
 architecture Behavioral of h_sync_gen is
-
+	type states is (activeVideo, frontPorch, sync, backPorch);
+	signal state_reg, state_next: states;
+	signal clock_state, clock_next: unsigned(1000);
 begin
 
+	-- state register
+   process(clk,reset)
+   begin
+      if (reset='1') then
+         state_reg <= start;
+			clock_state <= unsigned(0);
+      elsif (clk'event and clk='1') then
+         state_reg <= state_next;
+			clock_state <= clock_next;
+      end if;
+   end process;
+	
+	--Next State Logic
+	process(input, clock_state) is
+	begin
+		clock_next <= clock_state +1;
+		state_next <= state_next;
+		if(clock_state = 800) then
+			state_next <= activeVideo;
+			clock_next <= 0;
+		elsif(clock_state = 640) then
+			state_next <= frontPorch;
+		elsif(clock_state = 656) then
+			state_next <= sync;
+		elsif(clock_state = 752) then
+			state_next <= backPorch;
+		end if;
+	end process;
+	
+	--Output Logic
+	h_sync <= '1' when state_reg = sync else
+				 '0';
+	blank  <= '0' when state_reg = activeVideo else
+	          '1';
+	column <= clock_state when clock_state < 640 else
+				 "000000000";
 
 end Behavioral;
 
