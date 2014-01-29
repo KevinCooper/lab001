@@ -19,6 +19,7 @@ architecture Cooper of atlys_lab_video is
 begin
 
 
+
     -- Clock divider - creates pixel clock from 100MHz clock
     inst_DCM_pixel: DCM
     generic map(
