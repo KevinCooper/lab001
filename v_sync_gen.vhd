@@ -26,8 +26,8 @@ begin
    process(clk,reset)
    begin
       if (reset='1') then
-         state_reg <= start;
-			clock_state <= unsigned(0);
+         state_reg <= activeVideo;
+			clock_state <= (others => '0');
       elsif (clk'event and clk='1') then
          state_reg <= state_next;
 			clock_state <= clock_next;
@@ -35,22 +35,19 @@ begin
    end process;
 	
 	--Next State Logic
-	process(input, clock_state, h_sync) is
+	process(h_completed) is
 	begin
 		state_next <= state_next;
-		clock_next <= clock_next;
+		clock_next <= clock_state +1;
 		if(clock_state = 525) then
 			state_next <= activeVideo;
-			clock_next <= 0;
+			clock_next <= (others => '0');
 		elsif(clock_state = 480) then
 			state_next <= frontPorch;
 		elsif(clock_state = 490) then
 			state_next <= sync;
 		elsif(clock_state = 492) then
 			state_next <= backPorch;
-		end if;
-		if(h_completed = '1') then
-			clock_next <= clock_state +1;
 		end if;
 	end process;
 	
@@ -60,7 +57,7 @@ begin
 	blank  <= '0' when state_reg = activeVideo else
 	          '1';
 	row <= clock_state when clock_state < 480 else
-				 "000000000";
+				 (others => '0');
 	completed <= '1' when clock_state = 525 else
 					 '0';
 end Cooper;
