@@ -23,8 +23,8 @@ begin
    process(clk,reset)
    begin
       if (reset='1') then
-         state_reg <= start;
-			clock_state <= unsigned(0);
+         state_reg <= activeVideo;
+			clock_state <= "0";
       elsif (clk'event and clk='1') then
          state_reg <= state_next;
 			clock_state <= clock_next;
@@ -32,19 +32,21 @@ begin
    end process;
 	
 	--Next State Logic
-	process(input, clock_state) is
+	process(clk, clock_state) is
 	begin
-		clock_next <= clock_state +1;
-		state_next <= state_next;
-		if(clock_state = 800) then
-			state_next <= activeVideo;
-			clock_next <= 0;
-		elsif(clock_state = 640) then
-			state_next <= frontPorch;
-		elsif(clock_state = 656) then
-			state_next <= sync;
-		elsif(clock_state = 752) then
-			state_next <= backPorch;
+		if(clk'event and clk='1') then
+			clock_next <= clock_state +1;
+			state_next <= state_next;
+			if(clock_state = 800) then
+				state_next <= activeVideo;
+				clock_next <= "0";
+			elsif(clock_state = 640) then
+				state_next <= frontPorch;
+			elsif(clock_state = 656) then
+				state_next <= sync;
+			elsif(clock_state = 752) then
+				state_next <= backPorch;
+			end if;
 		end if;
 	end process;
 	
