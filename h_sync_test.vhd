@@ -16,7 +16,7 @@ ARCHITECTURE behavior OF h_sync_test IS
          h_sync : OUT  std_logic;
          blank : OUT  std_logic;
          completed : OUT  std_logic;
-         column : OUT  std_logic_vector(10 downto 0)
+         column : OUT unsigned(10 downto 0)
         );
     END COMPONENT;
     
@@ -29,7 +29,7 @@ ARCHITECTURE behavior OF h_sync_test IS
    signal h_sync : std_logic;
    signal blank : std_logic;
    signal completed : std_logic;
-   signal column : std_logic_vector(10 downto 0);
+   signal column : unsigned(10 downto 0);
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -60,7 +60,7 @@ BEGIN
    stim_proc: process
    begin		
       reset <='1';
-      wait for 100 ns;	
+      wait for 10 ns;	
       wait for clk_period*(3/4);
 		reset <= '0';
 		for I in 0 to 800 loop
@@ -72,7 +72,8 @@ BEGIN
 				assert completed = '0'
 					report "HSyn incorrectly asserted that completed was done before count reached 800."
 					severity failure;
-			end if;		
+			end if;	
+			wait for clk_period;			
 		end loop;
 
       -- insert stimulus here 

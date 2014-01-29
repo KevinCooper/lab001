@@ -16,7 +16,7 @@ end h_sync_gen;
 architecture Behavioral of h_sync_gen is
 	type states is (activeVideo, frontPorch, sync, backPorch);
 	signal state_reg, state_next: states;
-	signal clock_state, clock_next: unsigned(1000);
+	signal clock_state, clock_next: unsigned(10 downto 0);
 begin
 
 	-- state register
@@ -24,7 +24,7 @@ begin
    begin
       if (reset='1') then
          state_reg <= activeVideo;
-			clock_state <= "0";
+			clock_state <= "00000000000";
       elsif (clk'event and clk='1') then
          state_reg <= state_next;
 			clock_state <= clock_next;
@@ -32,14 +32,13 @@ begin
    end process;
 	
 	--Next State Logic
-	process(clk, clock_state) is
+	process(clk) is
 	begin
-		if(clk'event and clk='1') then
 			clock_next <= clock_state +1;
 			state_next <= state_next;
 			if(clock_state = 800) then
 				state_next <= activeVideo;
-				clock_next <= "0";
+				clock_next <= "00000000000";
 			elsif(clock_state = 640) then
 				state_next <= frontPorch;
 			elsif(clock_state = 656) then
@@ -47,7 +46,6 @@ begin
 			elsif(clock_state = 752) then
 				state_next <= backPorch;
 			end if;
-		end if;
 	end process;
 	
 	--Output Logic
@@ -56,7 +54,7 @@ begin
 	blank  <= '0' when state_reg = activeVideo else
 	          '1';
 	column <= clock_state when clock_state < 640 else
-				 "000000000";
+				 "00000000000";
 	completed <= '1' when clock_state = 800 else
 					 '0';
 
