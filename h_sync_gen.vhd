@@ -55,6 +55,8 @@ begin
 	          '1';
 	column <= clock_state when clock_state < 640 else
 				 "000000000";
+	completed <= '1' when clock_state = 800 else
+					 '0';
 
 end Behavioral;
 
