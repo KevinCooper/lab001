@@ -19,7 +19,7 @@ end v_sync_gen;
 architecture Cooper of v_sync_gen is
 	type states is (activeVideo, frontPorch, sync, backPorch);
 	signal state_reg, state_next: states;
-	signal clock_state, clock_next: unsigned(1000);
+	signal clock_state, clock_next: unsigned(10 downto 0);
 begin
 
 	-- state register

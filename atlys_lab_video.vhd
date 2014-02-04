@@ -15,7 +15,12 @@ entity atlys_lab_video is
 end atlys_lab_video;
 
 architecture Cooper of atlys_lab_video is
--- TODO: Signals, as needed
+signal blue, green, red : std_logic_vector(7 downto 0);
+signal red_s, blue_s, green_s, clock_s: std_logic;
+signal row, column: unsigned(10 downto 0);
+signal v_sync, h_sync: std_logic;
+signal pixel_clk, serialize_clk, serialize_clk_n: std_logic;
+signal v_completed, blank: std_logic;
 begin
 
 
@@ -48,7 +53,27 @@ begin
             );
 
     -- TODO: VGA component instantiation
+	 inst_vga_sync: entity work.vga_sync
+	 port map(
+				clk => clk,
+				reset => reset,
+				h_sync=>h_sync,
+				v_sync=>v_sync,
+				v_completed=>v_completed,
+				blank=>blank,
+				row=> row,
+				column=> column
+				);
     -- TODO: Pixel generator component instantiation
+	 inst_pixel_gen: entity work.pixel_gen
+	 port map (
+					row=> row,
+					column=> column,
+					blank=> blank,
+					r=>red,
+					g=>green,
+					b=>blue
+					);
 
     -- Convert VGA signals to HDMI (actually, DVID ... but close enough)
     inst_dvid: entity work.dvid
