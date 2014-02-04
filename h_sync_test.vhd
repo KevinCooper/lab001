@@ -63,7 +63,7 @@ BEGIN
       wait for 10 ns;	
       wait for clk_period*(3/4);
 		reset <= '0';
-		for I in 0 to 800 loop
+		for I in 1 to 800 loop
 			if(I=800) then
 				assert completed = '1'
 					report "HSyn did not correctly assert the completed signal when count was 800"

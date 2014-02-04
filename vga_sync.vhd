@@ -19,34 +19,13 @@ end vga_sync;
 
 architecture Cooper of vga_sync is
 
-component v_sync_gen
-    port ( clk         : in  std_logic;
-           reset       : in std_logic;
-           h_blank     : in std_logic;
-           h_completed : in std_logic;
-           v_sync      : out std_logic;
-           blank       : out std_logic;
-           completed   : out std_logic;
-           row         : out unsigned(10 downto 0)
-     );
-end component;
 
-component h_sync_gen
-    port ( clk       : in  std_logic;
-           reset     : in  std_logic;
-           h_sync    : out std_logic;
-           blank     : out std_logic;
-           completed : out std_logic;
-           column    : out unsigned(10 downto 0)
-     );
-end component;
-
-signal wire_hsync, wire_vsync, wire_vcompleted: std_logic;
 signal wire_vblank, wire_hblank: std_logic;
 signal wire_hcompleted: std_logic;
 begin
 
-	my_v : v_sync_gen port map
+	my_v : entity work.v_sync_gen 
+	port map
 	(
 	clk=> clk,
 	reset=>reset,
@@ -58,7 +37,8 @@ begin
 	row=>row
 	);
 	
-	my_h : h_sync_gen port map
+	my_h : entity work.h_sync_gen
+	port map
 	(
 	clk=> clk,
 	reset=>reset,
@@ -69,8 +49,7 @@ begin
 	);
 
 --output signals
-blank <= '1' when wire_hblank='1' or wire_vblank='1'
-			else '0';
+blank <= wire_hblank or wire_vblank;
 
 end Cooper;
 
