@@ -18,5 +18,12 @@ architecture Cooper of pixel_gen is
 begin
 
 
+--output logic
+r<=(others=>'1') when blank ='1'
+	else (others=>'0');
+g<=(others=>'0');
+b<=(others=>'0');
+
+
 end Cooper;
 

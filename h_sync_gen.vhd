@@ -24,7 +24,7 @@ begin
    begin
       if (reset='1') then
          state_reg <= activeVideo;
-			clock_state <= "00000000000";
+			clock_state <= (others => '0');
       elsif (clk'event and clk='1') then
          state_reg <= state_next;
 			clock_state <= clock_next;
@@ -38,7 +38,7 @@ begin
 			state_next <= state_next;
 			if(clock_state = 800) then
 				state_next <= activeVideo;
-				clock_next <= "00000000000";
+				clock_next <= (others => '0');
 			elsif(clock_state = 640) then
 				state_next <= frontPorch;
 			elsif(clock_state = 656) then
@@ -54,7 +54,7 @@ begin
 	blank  <= '0' when state_reg = activeVideo else
 	          '1';
 	column <= clock_state when clock_state < 640 else
-				 "00000000000";
+				 (others => '0');
 	completed <= '1' when clock_state = 800 else
 					 '0';
 
