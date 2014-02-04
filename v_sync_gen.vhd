@@ -35,7 +35,7 @@ begin
    end process;
 	
 	--Next State Logic
-	process(h_completed) is
+	process(h_completed, clock_state) is
 	begin
 		state_next <= state_next;
 		clock_next <= clock_state +1;
@@ -52,8 +52,8 @@ begin
 	end process;
 	
 	--Output Logic
-	v_sync <= '1' when state_reg = sync else
-				 '0';
+	v_sync <= '0' when state_reg = sync else
+				 '1';
 	blank  <= '0' when state_reg = activeVideo else
 	          '1';
 	row <= clock_state when clock_state < 480 else

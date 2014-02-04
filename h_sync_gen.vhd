@@ -49,8 +49,8 @@ begin
 	end process;
 	
 	--Output Logic
-	h_sync <= '1' when state_reg = sync else
-				 '0';
+	h_sync <= '0' when state_reg = sync else
+				 '1';
 	blank  <= '0' when state_reg = activeVideo else
 	          '1';
 	column <= clock_state when clock_state < 640 else

@@ -74,8 +74,8 @@ row <= wire_row;
 column<=wire_column;
 blank <= '0' when wire_hblank='0' and wire_vblank='0'
 			else '1';
-h_sync<=wire_vsync;
-v_sync<=wire_hsync;
+h_sync<=wire_hsync;
+v_sync<=wire_vsync;
 v_completed<=wire_vcompleted;
 
 end Cooper;
