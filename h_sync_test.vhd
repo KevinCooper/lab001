@@ -67,11 +67,11 @@ BEGIN
 			if(I=800) then
 				assert completed = '1'
 					report "HSyn did not correctly assert the completed signal when count was 800"
-					severity failure;
+					severity error;
 			else
 				assert completed = '0'
 					report "HSyn incorrectly asserted that completed was done before count reached 800."
-					severity failure;
+					severity error;
 			end if;	
 			wait for clk_period;			
 		end loop;

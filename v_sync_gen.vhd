@@ -39,14 +39,14 @@ begin
 	begin
 		state_next <= state_next;
 		clock_next <= clock_state +1;
-		if(clock_state = 525) then
+		if(clock_state = 524) then
 			state_next <= activeVideo;
 			clock_next <= (others => '0');
-		elsif(clock_state = 480) then
+		elsif(clock_state = 479) then
 			state_next <= frontPorch;
-		elsif(clock_state = 490) then
+		elsif(clock_state = 489) then
 			state_next <= sync;
-		elsif(clock_state = 492) then
+		elsif(clock_state = 491) then
 			state_next <= backPorch;
 		end if;
 	end process;
@@ -58,7 +58,7 @@ begin
 	          '1';
 	row <= clock_state when clock_state < 480 else
 				 (others => '0');
-	completed <= '1' when clock_state = 525 else
+	completed <= '1' when clock_state = 524 else
 					 '0';
 end Cooper;
 

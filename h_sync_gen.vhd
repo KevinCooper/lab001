@@ -36,14 +36,14 @@ begin
 	begin
 			clock_next <= clock_state +1;
 			state_next <= state_next;
-			if(clock_state = 800) then
+			if(clock_state = 799) then
 				state_next <= activeVideo;
 				clock_next <= (others => '0');
-			elsif(clock_state = 640) then
+			elsif(clock_state = 639) then
 				state_next <= frontPorch;
-			elsif(clock_state = 656) then
+			elsif(clock_state = 655) then
 				state_next <= sync;
-			elsif(clock_state = 752) then
+			elsif(clock_state = 751) then
 				state_next <= backPorch;
 			end if;
 	end process;
@@ -55,7 +55,7 @@ begin
 	          '1';
 	column <= clock_state when clock_state < 640 else
 				 (others => '0');
-	completed <= '1' when clock_state = 800 else
+	completed <= '1' when clock_state = 799 else
 					 '0';
 
 end Behavioral;
