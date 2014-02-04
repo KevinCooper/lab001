@@ -55,7 +55,7 @@ begin
     -- TODO: VGA component instantiation
 	 inst_vga_sync: entity work.vga_sync
 	 port map(
-				clk => clk,
+				clk => pixel_clk,
 				reset => reset,
 				h_sync=>h_sync,
 				v_sync=>v_sync,
