@@ -52,4 +52,3 @@ begin
 blank <= wire_hblank or wire_vblank;
 
 end Cooper;
-

@@ -25,23 +25,26 @@ begin
 	-- state register
    process(clk,reset)
    begin
+	clock_next <= clock_state +1;
       if (reset='1') then
          state_reg <= activeVideo;
 			clock_state <= (others => '0');
-      elsif (clk'event and clk='1') then
+      elsif (clk'event and clk='1' and h_completed='1') then
          state_reg <= state_next;
-			clock_state <= clock_next;
+			if(clock_state = 524) then
+				clock_state <= (others => '0');
+			else
+				clock_state <= clock_next;
+			end if;
       end if;
    end process;
 	
 	--Next State Logic
-	process(h_completed, clock_state) is
+	process(clock_state) is
 	begin
 		state_next <= state_next;
-		clock_next <= clock_state +1;
 		if(clock_state = 524) then
 			state_next <= activeVideo;
-			clock_next <= (others => '0');
 		elsif(clock_state = 479) then
 			state_next <= frontPorch;
 		elsif(clock_state = 489) then
