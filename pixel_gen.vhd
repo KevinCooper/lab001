@@ -19,16 +19,17 @@ begin
 
 
 --output logic
-r<=(others=>'1') when column <"01000000" and row<"10000000" else
-	(others=>'1') when row>"10000000" else
-	(others=>'0');
+r<="00000000" when blank='1' else
+	"11111111"; --when column <"01000000" and row<"10000000" else
+	--(others=>'1') when row>"10000000" else
+	--(others=>'0');
 	
-g<=(others=>'1') when column >"01000000" and column<"10000000" and row<"10000000" else
-	"01000000" when row>"10000000" else
-	(others=>'0');
+g<="00000000";--(others=>'1') when column >"01000000" and column<"10000000" and row<"10000000" else
+	--"01000000" when row>"10000000" else
+	--(others=>'0');
 	
-b<=(others=>'1') when column >"10000000" and row<"10000000" else
-	(others=>'0');
+b<="00000000";--(others=>'1') when column >"10000000" and row<"10000000" else
+	--(others=>'0');
 
 
 

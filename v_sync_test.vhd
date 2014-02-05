@@ -60,7 +60,14 @@ BEGIN
 		clk <= '1';
 		wait for clk_period/2;
    end process;
- 
+	
+   h_proc :process
+   begin
+		h_completed <= '0';
+		wait for clk_period * 799;
+		h_completed <= '1';
+		wait for clk_period;
+   end process; 
 
    -- Stimulus process
    stim_proc: process
@@ -68,10 +75,8 @@ BEGIN
       -- hold reset state for 100 ns.
 		h_blank<= '0';
 		reset <= '1';
-		h_completed <= '0';
       wait for clk_period*(7/4);
 		reset <= '0';
-		h_completed<='1';
 		for I in 0 to 525 loop
 			if(I=525) then
 				assert completed = '1'

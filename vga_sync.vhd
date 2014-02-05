@@ -24,7 +24,7 @@ signal wire_vblank, wire_hblank: std_logic;
 signal wire_hcompleted: std_logic;
 begin
 
-	my_v : entity work.v_sync_gen 
+	my_v : entity work.v_sync_gen(Cooper) 
 	port map
 	(
 	clk=> clk,
@@ -37,7 +37,7 @@ begin
 	row=>row
 	);
 	
-	my_h : entity work.h_sync_gen
+	my_h : entity work.h_sync_gen(Cooper)
 	port map
 	(
 	clk=> clk,
@@ -52,3 +52,39 @@ begin
 blank <= wire_hblank or wire_vblank;
 
 end Cooper;
+
+architecture moore of vga_sync is
+
+
+signal wire_vblank, wire_hblank: std_logic;
+signal wire_hcompleted: std_logic;
+begin
+
+	my_v : entity work.v_sync_gen(moore) 
+	port map
+	(
+	clk=> clk,
+	reset=>reset,
+	h_blank=>wire_hblank,
+	h_completed=>wire_hcompleted,
+	v_sync=>v_sync,
+	blank=>wire_vblank,
+	completed=>v_completed,
+	row=>row
+	);
+	
+	my_h : entity work.h_sync_gen(moore)
+	port map
+	(
+	clk=> clk,
+	reset=>reset,
+	h_sync=>h_sync,
+	blank=>wire_hblank,
+	completed=>wire_hcompleted,
+	column=>column
+	);
+
+--output signals
+blank <= wire_hblank or wire_vblank;
+
+end moore;

@@ -52,7 +52,7 @@ begin
                 clkfx180 => serialize_clk_n
             );
 
-    -- TODO: VGA component instantiation
+    --VGA component instantiation
 	 inst_vga_sync: entity work.vga_sync
 	 port map(
 				clk => pixel_clk,
@@ -64,7 +64,7 @@ begin
 				row=> row,
 				column=> column
 				);
-    -- TODO: Pixel generator component instantiation
+    --Pixel generator component instantiation
 	 inst_pixel_gen: entity work.pixel_gen
 	 port map (
 					row=> row,
@@ -105,4 +105,3 @@ begin
         ( O  => TMDS(3), OB => TMDSB(3), I  => clock_s );
 
 end Cooper;
-
