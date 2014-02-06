@@ -2,6 +2,9 @@
 ##Introduction
 The purpose of this lab was to implement a VGA controller in VHDL and implement it on our Spartan VI boards.  We were provided VGA-to-HDMI module was used to allow the use of the onboard HDMI port.  The video controller is written in a modified version of the major-minor FSM methodology taught in class.
 ##Implementation
+###Schematic
+![RTL Schematic](images/SCHEMATIC.png)
+###State Diagrams
 ##Test/Debug
 Much of the debugging was done through visual analysis of the signals to verify that they were correct.  Since my original implemenation was off by one due to the fact that I was not taking into account '0', my test files also made the same mistake when the for loops started at '0' as well.  A comparison of signal output between Bill Parks and my own led me to correct the implementation of the row counter in the V sync module.
 ##Conclusion
