@@ -31,7 +31,7 @@ begin
       if (reset='1') then
          state_reg <= activeVideo;
 			clock_state <= (others => '0');
-      elsif (clk'event and clk='1' and h_completed='1') then
+      elsif (rising_edge(clk) and h_completed='1') then
          state_reg <= state_next;
 			if(clock_state = 524) then
 				clock_state <= (others => '0');

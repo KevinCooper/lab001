@@ -2,6 +2,30 @@
 ##Introduction
 The purpose of this lab was to implement a VGA controller in VHDL and implement it on our Spartan VI boards.  We were provided VGA-to-HDMI module was used to allow the use of the onboard HDMI port.  The video controller is written in a modified version of the major-minor FSM methodology taught in class.
 ##Implementation
+###Code
+For the hsync and vsync, the basic design used code similar to the coding sandards laid out in the book.  The following code is an example of the state machines used in my code.
+```vhdl
+process(clk) is
+begin
+	clock_next<= clock_next;
+	state_next<= state_next;
+	if(clock_state = 799) then
+		state_next <= activeVideo;
+		clock_next <= (others =>'0');
+	elsif(clock_state=639) then
+		state_next <= frontPorch;
+	elsif(clock_state = 655) then
+		state_next <= sync;
+	elsif(clock_state <= 751) then
+	state_next <= backPorch;
+	end if;
+end process;
+```
+The output logic was designed using basic combinational logic depending on the current state.  An example is:
+```vhdl
+blank <= '0' when state_reg = activeVideo else
+	 '1';
+```
 ###Schematic
 ![RTL Schematic](images/SCHEMATIC.png)
 ###State Diagrams
