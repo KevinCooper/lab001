@@ -5,6 +5,10 @@ The purpose of this lab was to implement a VGA controller in VHDL and implement 
 ###Schematic
 ![RTL Schematic](images/SCHEMATIC.png)
 ###State Diagrams
+####Hsync
+![Hsync State Machine](images/hsync.png)
+####VSync
+![Vsyn State Machine](images/vsync.png)
 ##Test/Debug
 Much of the debugging was done through visual analysis of the signals to verify that they were correct.  Since my original implemenation was off by one due to the fact that I was not taking into account '0', my test files also made the same mistake when the for loops started at '0' as well.  A comparison of signal output between Bill Parks and my own led me to correct the implementation of the row counter in the V sync module.
 ##Conclusion
